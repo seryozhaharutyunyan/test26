@@ -69,53 +69,37 @@ export default {
             for (let i in data) {
                 if (typeof data[i] === 'object') {
                     let k = this.create(data[i]);
-                    console.log(k);
-                    let span = document.createElement('span')
-                    span.innerText = `${i} ${typeof data[i]}`;
-                    k.prepend(span);
-                    k.classList.add('drop-content');
+                    k.prepend(`${i} ${typeof data[i]}`);
+                    k.addEventListener('click', function () {
+                        for (const child of this.children) {
+                            child.style.display = child.style.display === 'none' ? 'block' : 'none';
+                        }
+                        event.stopPropagation()
+                    })
                     let li = document.createElement('li');
                     li.append(k);
+                    li.style.display = 'none';
                     fragment.append(li);
                     continue;
                 }
 
                 let li = document.createElement('li');
                 li.innerHTML = `${i} ${typeof data[i]}: ${data[i]}`;
-                li.classList.add('drop-content');
+                li.style.display = 'none';
                 fragment.append(li);
             }
-
             ol.append(fragment);
-
             return ol;
         },
 
         createStart(data) {
             data = JSON.parse(data);
             this.$refs.li.innerHTML = '';
-            let fragment = document.createDocumentFragment();
-            let ol = document.createElement('ol');
-            for (let i in data) {
-                if (typeof data[i] === 'object') {
-                    let li = document.createElement('li');
-                    let span = document.createElement('span')
-                    span.innerText = `${i} ${typeof data[i]}`;
-                    span.classList.add('drop')
-                    li.prepend(span);
-                    let k = this.create(data[i]);
-                    k.classList.add('drop-content');
-                    li.append(k);
-                    li.classList.add('drop')
-                    fragment.append(li);
-                    continue;
-                }
-
-                let li = document.createElement('li');
-                li.innerHTML = `${i} ${typeof data[i]}: ${data[i]}`;
-                fragment.append(li);
+            let ol = this.create(data)
+            for (const child of ol.children) {
+                console.log(child);
+                child.style.display = 'block';
             }
-            ol.append(fragment);
             this.$refs.li.append(ol);
         },
 
@@ -134,24 +118,12 @@ export default {
 
 <style>
 ol {
-    list-style-type: none;
     padding-left: 5px;
-}
-
-li {
-    padding-left: 10px;
-}
-
-.drop {
-
     cursor: pointer;
 }
 
-.drop-content {
-    display: none;
-}
-
-.drop:hover .drop-content {
-    display: block;
+li {
+    border: 1px solid black;
+    padding-left: 10px;
 }
 </style>

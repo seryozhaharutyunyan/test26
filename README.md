@@ -7,7 +7,6 @@ laravel version 9.x
 mySql version 8.0
 
 ---------------------------------------------------------------------
-run in composer install
 run in npm install && npm run dev
 <table>
   <tr>

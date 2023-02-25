@@ -13,7 +13,10 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-
+    /**
+     * @param array $data
+     * @return void
+     */
     public function login(array $data)
     {
         $credentials = $data;

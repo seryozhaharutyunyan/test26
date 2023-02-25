@@ -26,28 +26,15 @@ export default {
             token: '',
             time: '',
             id: '',
-            error:'',
-            data: JSON.stringify({
-
-                "firstName": "Иван",
-                "lastName": "Иванов",
-                "address": {
-                    "streetAddress": "Московское ш., 101, кв.101",
-                    "city": "Ленинград",
-                    "postalCode": 101101
-                },
-                "phoneNumbers": [
-                    "812 123-1234",
-                    "916 123-4567"
-                ]
-            })
+            error: '',
+            data: ''
         }
     },
 
     methods: {
         query() {
             let token = ("Bearer " + this.token);
-            this.error='';
+            this.error = '';
             axios.defaults.headers.common['Authorization'] = token;
             if (this.method === 'get') {
                 axios.get(`api/exercise2get/${this.data}`).then(resolve => {
@@ -57,7 +44,6 @@ export default {
 
                     this.time = resolve.data.time;
                     this.id = resolve.data.id;
-
 
                     console.log(resolve);
                 }).catch(() => {

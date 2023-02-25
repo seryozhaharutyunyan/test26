@@ -89,6 +89,10 @@ class ExerciseController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * @param $id
+     * @return void
+     */
     public function destroy($id)
     {
         $exercise=Exercise::find($id);

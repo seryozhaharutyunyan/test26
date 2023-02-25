@@ -11,7 +11,7 @@
         </select>
         <textarea type="text" class="form-control m-2" v-model.trim="token" placeholder="Token"></textarea>
         <div class="text-center text-danger">{{ error }}</div>
-        <input class="form-control m-2" v-model.trim="data" placeholder="Data">
+        <textarea class="form-control m-2" v-model.trim="data" placeholder="Data"></textarea>
         <button class="btn btn-secondary m-2" @click="send()">send</button>
     </div>
 </template>
@@ -38,10 +38,10 @@ export default {
         send() {
             let token = ("Bearer " + this.token);
             this.error = '';
-
+            let str=JSON.parse(JSON.stringify(this.data).replace('\\n', ' '));
             axios.defaults.headers.common['Authorization'] = token;
             if (this.method === 'get') {
-                axios.get(`api/exercise3get/${this.id}/${this.data}`).then(resolve => {
+                axios.get(`api/exercise3get/${this.id}/${str}`).then(resolve => {
                     if (resolve.data.token !== '') {
                         this.token = resolve.data;
                     }
@@ -51,7 +51,7 @@ export default {
             }
             if (this.method === 'post') {
                 axios.post(`api/exercise3post`, {
-                    data: this.data,
+                    data: str,
                     id: this.id
                 }).then(resolve => {
                     if (resolve.data.token !== '') {
